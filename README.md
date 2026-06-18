@@ -1,3 +1,8 @@
+## Dashboard
+
+![Dashboard](images/NIDS.png)
+
+
 # 🛡️ Network Intrusion Detection System (NIDS)
 
 A Python-based Network Intrusion Detection System capable of detecting common network attacks through packet inspection and alerting. The project uses Scapy for packet capture, SQLite for alert storage, and Flask for a web-based monitoring dashboard.
