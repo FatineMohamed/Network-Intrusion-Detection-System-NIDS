@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIDS Dashboard</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0f172a;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #f8fafc;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background-color: #1e293b;
+            padding: 25px;
+            border-radius: 12px;
+            min-width: 250px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        }
+
+        .card h2 {
+            font-size: 40px;
+            margin-bottom: 10px;
+            color: #60a5fa;
+        }
+
+        .card p {
+            color: #cbd5e1;
+            font-size: 16px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #1e293b;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background-color: #2563eb;
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        td {
+            padding: 14px;
+            text-align: center;
+            border-bottom: 1px solid #334155;
+        }
+
+        tr:hover {
+            background-color: #334155;
+        }
+
+        .syn {
+            color: #ef4444;
+            font-weight: bold;
+        }
+
+        .udp {
+            color: #f97316;
+            font-weight: bold;
+        }
+
+        .port {
+            color: #eab308;
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>🛡️ Network Intrusion Detection System (NIDS) By Mohamed Fatine</h1>
+
+        <div class="card-container">
+
+            <div class="card">
+                <h2>{{ alerts|length }}</h2>
+                <p>Total Alerts</p>
+            </div>
+
+        </div>
+
+        <table>
+
+            <tr>
+                <th>ID</th>
+                <th>Timestamp</th>
+                <th>Source IP</th>
+                <th>Attack Type</th>
+                <th>Count</th>
+            </tr>
+
+            {% for alert in alerts %}
+
+            <tr>
+
+                <td>{{ alert[0] }}</td>
+                <td>{{ alert[1] }}</td>
+                <td>{{ alert[2] }}</td>
+
+                <td>
+
+                    {% if alert[3] == "SYN Flood" %}
+                        <span class="syn">🔴 {{ alert[3] }}</span>
+
+                    {% elif alert[3] == "UDP Flood" %}
+                        <span class="udp">🟠 {{ alert[3] }}</span>
+
+                    {% elif alert[3] == "Port Scan" %}
+                        <span class="port">🟡 {{ alert[3] }}</span>
+
+                    {% else %}
+                        {{ alert[3] }}
+                    {% endif %}
+
+                </td>
+
+                <td>{{ alert[4] }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+        <div class="footer">
+            NIDS Dashboard | Flask + SQLite + Scapy
+        </div>
+
+    </div>
+
+</body>
+
+</html>
